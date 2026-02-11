@@ -162,18 +162,37 @@ export const TemplateCreator: React.FC<TemplateCreatorProps> = ({ onSave, onCanc
       return;
     }
     
+    // FIX: Preserva tutti i metadati delle assegnazioni durante il map
     const newRequirements = reqs.map(r => {
       const existing = initialEvent?.requirements.find(er => er.role === r.role);
+      
+      // Inizializza array con la nuova quantità r.qty
       let assignedIds = Array(r.qty).fill(null);
       let entrustedGroups = Array(r.qty).fill(null);
+      let entrustedByGroups = Array(r.qty).fill(null);
+      let assignedByGroups = Array(r.qty).fill(null);
+      let specializations = existing?.specializations || [];
+
       if (existing) {
+        // Copia i dati esistenti fino alla dimensione minima tra vecchia e nuova qty
         for (let i = 0; i < Math.min(r.qty, existing.qty); i++) {
           assignedIds[i] = existing.assignedIds[i];
           if (existing.entrustedGroups) entrustedGroups[i] = existing.entrustedGroups[i];
+          if (existing.entrustedByGroups) entrustedByGroups[i] = existing.entrustedByGroups[i];
+          if (existing.assignedByGroups) assignedByGroups[i] = existing.assignedByGroups[i];
         }
       }
-      return { role: r.role, qty: r.qty, assignedIds, entrustedGroups };
-    }) as PersonnelRequirement[];
+
+      return { 
+        role: r.role, 
+        qty: r.qty, 
+        assignedIds, 
+        entrustedGroups,
+        entrustedByGroups,
+        assignedByGroups,
+        specializations
+      } as PersonnelRequirement;
+    });
 
     const newEvent: OperationalEvent = {
       id: initialEvent?.id || `EV-${Math.floor(Math.random() * 9000) + 1000}`,
@@ -360,7 +379,6 @@ export const TemplateCreator: React.FC<TemplateCreatorProps> = ({ onSave, onCanc
         </div>
       </div>
 
-      {/* FOOTER BAR: Trasformata da fixed a sticky per evitare sovrapposizioni e migliorare il flusso */}
       <div className="sticky bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-6 py-4 z-50 shadow-[0_-15px_35px_rgba(0,0,0,0.05)] -mx-8 mt-10">
         <div className="max-w-[1500px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex-1 flex items-center">

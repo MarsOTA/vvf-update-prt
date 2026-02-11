@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vigili del Fuoco - Comando di Milano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-red: #720000;
+            --brand-red-light: #8b0000;
+            --brand-yellow: #C9A40E;
+            --surface-ground: #f4f7f9;
+            --surface-card: #ffffff;
+            --sidebar-bg: #720000;
+            --sidebar-text: rgba(255, 255, 255, 0.7);
+            --sidebar-active-bg: rgba(255, 255, 255, 0.1);
+            --sidebar-active-text: #ffffff;
+            --border-radius: 0.75rem;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Titillium Web', sans-serif;
+            background-color: var(--surface-ground);
+            color: #334155;
+            -webkit-font-smoothing: antialiased;
+        }
+        #root {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .diamond-card {
+            background: var(--surface-card);
+            border-radius: var(--border-radius);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .diamond-card:hover {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        .sidebar-transition {
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav-label-transition {
+            transition: opacity 0.2s ease-in-out, visibility 0.2s;
+        }
+        .active-nav-indicator {
+            box-shadow: 0 0 15px rgba(201, 164, 14, 0.4);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .mask-fade-right {
+            mask-image: linear-gradient(to right, black 85%, transparent 100%);
+        }
+
+        /* Specific styles for PDF export */
+        .forced-pdf-grid .pdf-no-truncate {
+            white-space: normal !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+        }
+        .forced-pdf-grid .pdf-no-overflow {
+            overflow: visible !important;
+        }
+        
+        @media print {
+            @page {
+                size: A3 portrait;
+                margin: 5mm;
+            }
+            html, body {
+                height: auto !important;
+                overflow: visible !important;
+                background: white !important;
+                filter: grayscale(100%) !important;
+            }
+            .no-print, aside, header, .fixed { 
+                display: none !important; 
+            }
+            #root, #root > div, main {
+                display: block !important;
+                height: auto !important;
+                width: 100% !important;
+                position: static !important;
+                overflow: visible !important;
+            }
+            .print-grid-reset {
+                display: block !important; 
+                transform: none !important; 
+                width: 100% !important;
+                zoom: 1 !important;
+            }
+            .print-card-break {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                margin-bottom: 20px;
+                border: 2px solid #000 !important;
+                box-shadow: none !important;
+                display: block !important;
+                width: 100% !important;
+                float: none !important;
+            }
+            * {
+                color: #000 !important;
+                text-shadow: none !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
+    "xlsx": "https://esm.sh/xlsx@0.18.5",
+    "exceljs": "https://esm.sh/exceljs@4.4.0",
+    "html2canvas": "https://esm.sh/html2canvas@1.4.1",
+    "jspdf": "https://esm.sh/jspdf@2.5.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

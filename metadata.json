@@ -1,0 +1,5 @@
+{
+  "name": "VVFM",
+  "description": "Sistema di comando e controllo per la pianificazione operativa dei servizi di vigilanza.",
+  "requestFramePermissions": []
+}
